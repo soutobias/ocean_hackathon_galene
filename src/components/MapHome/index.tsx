@@ -6,7 +6,9 @@ import {
   Pane,
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import L from 'leaflet';
+import { GetMBTiles } from './addMBTiles'
 
 // interface MapProps {
 // }
@@ -16,9 +18,49 @@ export function MapHome() {
   const MAPBOX_USERID = 'mapbox/satellite-v9';
 
   const [map, setMap] = useState<any>(null)
+  const [isLoading, setIsLoading] = useState<boolean>(false)
 
-  if (map){
-    console.log(map)
+  useEffect(() => {
+    if (map) {
+      setIsLoading(true)
+    }
+  }, [map])
+
+  // if (map){
+  //   console.log(map._layers)
+  // }
+  useEffect(() => {
+    if (map) {
+      addMBTileLayer()
+    }
+  }, [isLoading])
+
+  async function addMBTileLayer(){
+    const url = 'https://imfe-pilot-mbtiles.noc.ac.uk/v1/tiles/wekeompa@1.0.0/{z}/{x}/{y}.mvt'
+    const getMBTilesLayer = new GetMBTiles(url)
+    await getMBTilesLayer.getLayer().then(async function () {
+      const layer = getMBTilesLayer.layer
+      if (layer) {
+        map.addLayer(layer)
+        layer.on('click', async function (e: any) {
+          const strContent: string[] = []
+          Object.keys(e.layer.properties).forEach((c) => {
+            console.log(c)
+            strContent.push(
+              `<p>${c}: ${
+                e.layer.properties[c] === ' ' ? '--' : e.layer.properties[c]
+              }</p>`,
+            )
+          })
+          console.log('xxxx')
+          console.log(strContent.join(''))
+          L.popup({ maxWidth: 200 })
+            .setLatLng(e.latlng)
+            .setContent(strContent.join(''))
+            .openOn(map)
+        })
+      }
+    })
   }
 
   return (
