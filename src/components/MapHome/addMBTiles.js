@@ -15,7 +15,7 @@ export class GetMBTiles {
       interactive: true,
       vectorTileLayerStyles: {
         mpa: function (properties, zoom) {
-          let color = '#d97e00'
+          const color = '#d97e00'
           return {
             weight: 0.8,
             color,

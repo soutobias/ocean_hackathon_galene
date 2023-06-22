@@ -7,15 +7,15 @@ import {
 } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react'
-import L from 'leaflet';
+import L from 'leaflet'
 import { GetMBTiles } from './addMBTiles'
 
 // interface MapProps {
 // }
 
 export function MapHome() {
-  const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY;
-  const MAPBOX_USERID = 'mapbox/satellite-v9';
+  const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY
+  const MAPBOX_USERID = 'mapbox/satellite-v9'
 
   const [map, setMap] = useState<any>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -26,21 +26,23 @@ export function MapHome() {
     }
   }, [map])
 
-  // if (map){
-  //   console.log(map._layers)
-  // }
+  if (map) {
+    console.log(map._layers)
+  }
   useEffect(() => {
     if (map) {
       addMBTileLayer()
     }
   }, [isLoading])
 
-  async function addMBTileLayer(){
-    const url = 'https://imfe-pilot-mbtiles.noc.ac.uk/v1/tiles/wekeompa@1.0.0/{z}/{x}/{y}.mvt'
+  async function addMBTileLayer() {
+    const url =
+      'https://imfe-pilot-mbtiles.noc.ac.uk/v1/tiles/wekeompa@1.0.0/{z}/{x}/{y}.mvt'
     const getMBTilesLayer = new GetMBTiles(url)
     await getMBTilesLayer.getLayer().then(async function () {
       const layer = getMBTilesLayer.layer
       if (layer) {
+        layer.options.attribution = 'MPA Layer'
         map.addLayer(layer)
         layer.on('click', async function (e: any) {
           const strContent: string[] = []

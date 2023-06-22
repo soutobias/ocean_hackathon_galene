@@ -45,6 +45,9 @@
 .leaflet-popup-close-button span{
   font-size: 2rem;
 }
-/* expanded .leaflet-control-layers-toggle{
-  display: none !important;
-} */
+
+
+.range-slider {
+  margin: 0 auto;
+  width: 75%;
+}
