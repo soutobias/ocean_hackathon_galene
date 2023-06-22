@@ -16,8 +16,8 @@ export function LayerSelection({
   const variables: any = {
     chl: 'Chlorophyll',
     phyc: 'phyc',
-    no3: 'no3',
-    po4: 'po4',
+    no3: 'Nitrogen',
+    po4: 'Phosporus',
     o2: 'Dissolved Oxigen',
     ph: 'PH',
     so: 'so',
