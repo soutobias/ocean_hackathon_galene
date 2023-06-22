@@ -5,7 +5,6 @@ export const HomeContainer = styled.div`
   padding: 0;
   height: 100%;
 `
-
 export const SideBar = styled.div`
   display: flex;
   position: absolute;
