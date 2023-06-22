@@ -15,13 +15,13 @@ export function LayerSelection({
 }: LayerSelectionProps) {
   const variables: any = {
     chl: 'Chlorophyll',
-    phyc: 'phyc',
+    phyc: 'Phytoplankton',
     no3: 'Nitrogen',
     po4: 'Phosporus',
     o2: 'Dissolved Oxigen',
     ph: 'PH',
-    so: 'so',
-    zos: 'zos',
+    so: 'Salinity',
+    zos: 'Water Level ',
     avg_temp_C: 'Mean Temperature (°C)',
   }
 

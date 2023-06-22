@@ -29,7 +29,9 @@
     "georaster-layer-for-leaflet": "^3.10.0",
     "styled-components": "^5.3.9",
     "tailwindcss": "^3.3.2",
-    "@tailwindcss/forms": "^0.5.3"
+    "@tailwindcss/forms": "^0.5.3",
+    "chroma": "^0.0.1",
+    "chroma-js": "^2.4.2"
   },
   "devDependencies": {
     "@rocketseat/eslint-config": "^1.2.0",
