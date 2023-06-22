@@ -16,6 +16,7 @@ interface MapHomeProps {
   layerAction: any
   setLayerAction: any
   actualDepth: any
+  setColorLegend: any
 }
 
 export function MapHome({
@@ -25,6 +26,7 @@ export function MapHome({
   layerAction,
   setLayerAction,
   actualDepth,
+  setColorLegend,
 }: MapHomeProps) {
   const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY
   const MAPBOX_USERID = 'mapbox/satellite-v9'
@@ -46,6 +48,7 @@ export function MapHome({
     )
     await getTifLayer.parseGeo().then(function () {
       map.addLayer(getTifLayer.layer)
+      setColorLegend(getTifLayer.scale)
     })
   }
   function addMapLayers() {
@@ -55,7 +58,7 @@ export function MapHome({
         return false
       }
     })
-    buildAndAddLayer(actualLayer)
+    buildAndAddLayer(actualLayer[0])
   }
 
   function removeMapLayers() {
@@ -83,6 +86,9 @@ export function MapHome({
         addMapLayers()
       } else if (layerAction === 'remove') {
         removeMapLayers()
+        if (selectedLayers.empty) {
+          setColorLegend(null)
+        }
       }
     }
   }, [selectedLayers])

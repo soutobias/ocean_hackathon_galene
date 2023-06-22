@@ -24,8 +24,8 @@ export function RangeSelection({
     if (selectedLayers.empty) {
       return
     }
+    setActualLayer(selectedLayers)
     setLayerAction('time')
-    setActualLayer(Object.keys(selectedLayers))
     setActualDate(e.target.value)
   }
   const years = [

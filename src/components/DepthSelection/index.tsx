@@ -26,7 +26,7 @@ export function DepthSelection({
       return
     }
     setLayerAction('depth')
-    setActualLayer(Object.keys(selectedLayers))
+    setActualLayer(selectedLayers)
     setActualDepth(depth)
   }
 

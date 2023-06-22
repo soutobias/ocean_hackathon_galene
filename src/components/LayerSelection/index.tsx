@@ -37,7 +37,7 @@ export function LayerSelection({
       })
     } else {
       setLayerAction('add')
-      setActualLayer(variable)
+      setActualLayer([variable])
       setSelectedLayers([...selectedLayers, variable])
     }
   }

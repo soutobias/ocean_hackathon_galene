@@ -5,6 +5,7 @@ import { BottomBar, HomeContainer, SideBar, TopRightBar } from './styles'
 import { yearMonth } from '../../components/RangeSelection/months'
 import { useState } from 'react'
 import { DepthSelection } from '../../components/DepthSelection'
+import { ColorBar } from '../../components/ColorBar'
 
 export function Home() {
   const [selectedLayers, setSelectedLayers] = useState([])
@@ -12,6 +13,8 @@ export function Home() {
   const [actualDate, setActualDate] = useState(yearMonth.length - 1)
   const [actualDepth, setActualDepth] = useState('1.0')
   const [layerAction, setLayerAction] = useState('')
+
+  const [colorLegend, setColorLegend] = useState(null)
 
   return (
     <HomeContainer>
@@ -35,13 +38,21 @@ export function Home() {
         />
       </BottomBar>
       <TopRightBar>
-        <DepthSelection
-          actualDepth={actualDepth}
-          setActualDepth={setActualDepth}
-          setLayerAction={setLayerAction}
-          setActualLayer={setActualLayer}
-          selectedLayers={selectedLayers}
-        ></DepthSelection>
+        {colorLegend ? (
+          <>
+            <DepthSelection
+              actualDepth={actualDepth}
+              setActualDepth={setActualDepth}
+              setLayerAction={setLayerAction}
+              setActualLayer={setActualLayer}
+              selectedLayers={selectedLayers}
+            ></DepthSelection>
+            <ColorBar
+              colorLegend={colorLegend}
+              setColorLegend={setColorLegend}
+            />
+          </>
+        ) : null}
       </TopRightBar>
       <MapHome
         selectedLayers={selectedLayers}
@@ -50,6 +61,7 @@ export function Home() {
         layerAction={layerAction}
         setLayerAction={setLayerAction}
         actualDepth={actualDepth}
+        setColorLegend={setColorLegend}
       />
     </HomeContainer>
   )

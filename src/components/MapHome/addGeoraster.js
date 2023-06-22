@@ -11,6 +11,7 @@ export class GetTifLayer {
     this.resolution = resolution
     this.url = null
     this.layer = null
+    this.scale = null
   }
 
   async parseGeo() {
@@ -18,23 +19,19 @@ export class GetTifLayer {
     const baseUrl = 'https://pilot-imfe-o.s3-ext.jc.rl.ac.uk/haig-fras/wekeo/'
     this.url = `${baseUrl}${this.actualLayer}_${this.actualDepth}_${this.actualDate}.tiff`
 
-    this.url = `${baseUrl}chl_5.0_2013-01.tiff`
+    // this.url = `${baseUrl}chl_5.0_2013-01.tiff`
 
-    const minMax = {
-      chl: [0.0442142405, 0.26105115749999996],
-      phyc: [0.210064535, 1.102216925],
-      no3: [0.3782260075, 1.798195],
-      po4: [0.0069639635, 0.0917562975],
-      o2: [214.82448499999998, 252.42014],
-      ph: [7.985332625, 8.14701275],
-      so: [37.762795499999996, 38.275695],
-      zos: [-0.5596080000000001, -0.333068435],
-      avg_temp_C: [13.441810909090918, 25.962853333333328],
-    }
-
-    const scale = chroma
-      .scale(['yellow', 'black'])
-      .domain([minMax[this.actualLayer][0], minMax[this.actualLayer][1]])
+    // const minMax = {
+    //   chl: [0.0442142405, 0.26105115749999996],
+    //   phyc: [0.210064535, 1.102216925],
+    //   no3: [0.3782260075, 1.798195],
+    //   po4: [0.0069639635, 0.0917562975],
+    //   o2: [214.82448499999998, 252.42014],
+    //   ph: [7.985332625, 8.14701275],
+    //   so: [37.762795499999996, 38.275695],
+    //   zos: [-0.5596080000000001, -0.333068435],
+    //   avg_temp_C: [13.441810909090918, 25.962853333333328],
+    // }
 
     // const scale = chroma.scale(['yellow', 'red', 'black']).colors(100)
 
@@ -46,10 +43,15 @@ export class GetTifLayer {
           // const max = georaster.maxs[0]
           // const range = georaster.ranges[0]
           // var scale = chroma.scale("Viridis");
-          this.georaster = georaster
+          const scale = chroma
+            .scale(['#FFFFD4', '#FE9F59', '#E0E0E0'])
+            .domain([georaster.mins[0], georaster.maxs[0]])
+
+          this.scale = [georaster.mins[0], georaster.maxs[0]]
+
           this.layer = await new GeoRasterLayer({
             georaster,
-            opacity: 0.7,
+            opacity: 1,
             // pixelValuesToColorFn: function(pixelValues) {
             //   var pixelValue = pixelValues[0]; // there's just one band in this raster
 
