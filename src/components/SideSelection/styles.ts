@@ -1,18 +1,39 @@
 import styled from 'styled-components'
 
 export const SideSelectionContainer = styled.div`
-  position: relative;
+  display: flex;
+  width: max-content;
   height: 100vh;
   background-color: ${(props) => props.theme['gray-100']};
   padding: 0.375rem;
-  width: 3rem;
   z-index: 9000;
   /* border-radius: 16px; */
   box-shadow: 0px 4px 4px ${(props) => props.theme.black};
+`
+
+export const SideSelectionSide = styled.div`
+  position: relative;
+  height: 100vh;
+  width: 3rem;
+  z-index: 9000;
+  /* border-radius: 16px; */
   img {
     z-index: 9999;
   }
 `
+export const SideSelectionExtension = styled.div`
+  position: relative;
+  height: 100vh;
+  padding: 0.375rem;
+  width: max-content;
+  z-index: 9000;
+  border-left: 4px;
+  border-color: black;
+  img {
+    z-index: 9999;
+  }
+`
+
 export const SideSelectionLink = styled.header`
   display: flex;
   align-items: center;

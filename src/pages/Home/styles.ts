@@ -14,7 +14,13 @@ export const SideBar = styled.div`
 export const BottomBar = styled.div`
   display: flex;
   position: absolute;
-  bottom: 1.5rem;
-  left: 10vw;
-  right: 10vw;
+  bottom: 1rem;
+  left: 30vw;
+  right: 5vw;
+`
+export const TopRightBar = styled.div`
+  display: flex;
+  position: absolute;
+  top: 1rem;
+  right: 4vw;
 `

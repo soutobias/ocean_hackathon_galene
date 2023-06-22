@@ -2,7 +2,10 @@ import styled from 'styled-components'
 
 export const RangeSelectionContainer = styled.div`
   position: relative;
-  width: 80vw;
+  color: white;
+  text-shadow: 0 0 3px ${(props) => props.theme.black},
+    0 0 5px ${(props) => props.theme.black};
+  width: 65vw;
   z-index: 9000;
   input[type='range'] {
     :focus {
@@ -20,21 +23,21 @@ export const RangeSelectionContainer = styled.div`
       cursor: pointer;
       box-shadow: none;
       border-radius: 0px;
-      border: 1px solid #82cfd0;
+      border: 1px solid ${(props) => props.theme['blue-600']};
     }
     &::-moz-range-track {
       width: 100%;
       height: 12px;
       cursor: pointer;
       box-shadow: none;
-      background: #ffffff;
+      background: ${(props) => props.theme.white};
       border-radius: 0px;
-      border: 1px solid #82cfd0;
+      border: 1px solid ${(props) => props.theme['blue-600']};
     }
 
     &::-webkit-slider-thumb {
       box-shadow: none;
-      border: 0px solid #ffffff;
+      border: 0px solid ${(props) => props.theme.white};
       box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
       height: 2rem;
       width: 2rem;
@@ -46,12 +49,12 @@ export const RangeSelectionContainer = styled.div`
     }
     &::-moz-range-thumb {
       box-shadow: none;
-      border: 0px solid #ffffff;
+      border: 0px solid ${(props) => props.theme.white};
       box-shadow: 10px 10px 10px rgba(0, 0, 0, 1);
       height: 2rem;
       width: 2rem;
       border-radius: 22px;
-      background: rgba(255, 255, 255, 1);
+      background: ${(props) => props.theme.black};
       cursor: pointer;
       -webkit-appearance: none;
       margin-top: -20px;
@@ -59,5 +62,16 @@ export const RangeSelectionContainer = styled.div`
     &::-moz-focus-outer {
       border: 0;
     }
+  }
+`
+
+export const RangeValue = styled.div`
+  margin-top: 1rem;
+  p {
+    /* box-shadow: 10px 10px 10px rgba(0, 0, 0, 1); */
+    background: ${(props) => props.theme['blue-500']};
+    width: max-content;
+    padding: 0.5rem;
+    border-radius: 8px;
   }
 `

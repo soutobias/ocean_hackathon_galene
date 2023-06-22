@@ -46,6 +46,9 @@
   font-size: 2rem;
 }
 
+.active{
+  background: #82CFD0;
+}
 
 .range-slider {
   margin: 0 auto;

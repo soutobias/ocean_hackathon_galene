@@ -1,19 +1,31 @@
-import {
-  MapContainer,
-  TileLayer,
-  WMSTileLayer,
-  LayersControl,
-  Pane,
-} from 'react-leaflet'
+import { MapContainer, TileLayer } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 import { useEffect, useState } from 'react'
 import L from 'leaflet'
+import { GetTifLayer } from './addGeoraster'
 import { GetMBTiles } from './addMBTiles'
+import { yearMonth } from '../RangeSelection/months'
 
 // interface MapProps {
 // }
 
-export function MapHome() {
+interface MapHomeProps {
+  selectedLayers: any
+  actualLayer: any
+  actualDate: any
+  layerAction: any
+  setLayerAction: any
+  actualDepth: any
+}
+
+export function MapHome({
+  selectedLayers,
+  actualLayer,
+  actualDate,
+  layerAction,
+  setLayerAction,
+  actualDepth,
+}: MapHomeProps) {
   const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY
   const MAPBOX_USERID = 'mapbox/satellite-v9'
 
@@ -26,11 +38,78 @@ export function MapHome() {
     }
   }, [map])
 
-  if (map) {
-    console.log(map._layers)
+  async function buildAndAddLayer(actual: any) {
+    const getTifLayer = new GetTifLayer(
+      actual,
+      actualDepth,
+      yearMonth[actualDate],
+    )
+    await getTifLayer.parseGeo().then(function () {
+      map.addLayer(getTifLayer.layer)
+    })
   }
+  function addMapLayers() {
+    map.eachLayer(function (layer: any) {
+      if (actualLayer.includes(layer.options.attribution)) {
+        setLayerAction('')
+        return false
+      }
+    })
+    buildAndAddLayer(actualLayer)
+  }
+
+  function removeMapLayers() {
+    map.eachLayer(function (layer: any) {
+      if (actualLayer.includes(layer.options.attribution)) {
+        map.removeLayer(layer)
+        setLayerAction('')
+      }
+    })
+  }
+
+  function changeMapLayers() {
+    map.eachLayer(function (layer: any) {
+      if (actualLayer.includes(layer.options.attribution)) {
+        map.removeLayer(layer)
+        buildAndAddLayer(layer.options.attribution)
+        setLayerAction('')
+      }
+    })
+  }
+
   useEffect(() => {
     if (map) {
+      if (layerAction === 'add') {
+        addMapLayers()
+      } else if (layerAction === 'remove') {
+        removeMapLayers()
+      }
+    }
+  }, [selectedLayers])
+
+  useEffect(() => {
+    if (map) {
+      changeMapLayers()
+    }
+  }, [actualDate])
+
+  useEffect(() => {
+    if (map) {
+      changeMapLayers()
+    }
+  }, [actualDepth])
+
+  // if (map) {
+  //   console.log(map._layers)
+  // }
+  useEffect(() => {
+    if (map) {
+      const actual = ['MPA Layer']
+      map.eachLayer(function (layer: any) {
+        if (actual.includes(layer.options.attribution)) {
+          return false
+        }
+      })
       addMBTileLayer()
     }
   }, [isLoading])
@@ -47,15 +126,12 @@ export function MapHome() {
         layer.on('click', async function (e: any) {
           const strContent: string[] = []
           Object.keys(e.layer.properties).forEach((c) => {
-            console.log(c)
             strContent.push(
               `<p>${c}: ${
                 e.layer.properties[c] === ' ' ? '--' : e.layer.properties[c]
               }</p>`,
             )
           })
-          console.log('xxxx')
-          console.log(strContent.join(''))
           L.popup({ maxWidth: 200 })
             .setLatLng(e.latlng)
             .setContent(strContent.join(''))
@@ -77,7 +153,11 @@ export function MapHome() {
         zoomControl={false}
         ref={setMap}
       >
-        <LayersControl>
+        <TileLayer
+          url={`https://api.mapbox.com/styles/v1/${MAPBOX_USERID}/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_API_KEY}`}
+        />
+
+        {/* <LayersControl>
           <LayersControl.BaseLayer name="OSM">
             <Pane name="OSM" style={{ zIndex: -1 }}>
               <TileLayer
@@ -94,43 +174,7 @@ export function MapHome() {
               />
             </Pane>
           </LayersControl.BaseLayer>
-          <LayersControl.Overlay checked name="Special Areas of Conservation">
-            <WMSTileLayer
-              attribution="Special Areas of Conservation"
-              url="https://mpa-ows.jncc.gov.uk/mpa_mapper/wms?"
-              params={{
-                service: 'WMS',
-                request: 'GetMap',
-                version: '1.3.0',
-                layers: 'sac_mc_full',
-                format: 'image/png',
-                transparent: true,
-                width: 256,
-                height: 256,
-              }}
-              opacity={1}
-              zIndex={9999}
-            />
-          </LayersControl.Overlay>
-          <LayersControl.Overlay checked name="Marine Conservation Zones">
-            <WMSTileLayer
-              attribution="Marine Conservation Zones"
-              url="https://mpa-ows.jncc.gov.uk/mpa_mapper/wms?"
-              params={{
-                service: 'WMS',
-                request: 'GetMap',
-                version: '1.3.0',
-                layers: 'mcz',
-                format: 'image/png',
-                transparent: true,
-                width: 256,
-                height: 256,
-              }}
-              opacity={1}
-              zIndex={9998}
-            />
-          </LayersControl.Overlay>
-        </LayersControl>
+        </LayersControl> */}
       </MapContainer>
     </div>
   )
