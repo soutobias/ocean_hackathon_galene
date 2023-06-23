@@ -79,8 +79,7 @@ export class GetTifLayer {
                   return
                 }
               }
-              console.log(modelTarget)
-              console.log(limits)
+
               if (modelTarget) {
                 if (limits[modelTarget]) {
                   if (limits[modelTarget][actualLayer]) {

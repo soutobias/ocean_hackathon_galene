@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { DepthSelection } from '../../components/DepthSelection'
 import { ColorBar } from '../../components/ColorBar'
 import { yearMonths } from '../../data/yearMonths'
+import { GraphPopup } from '../../components/GraphPopup'
 
 export function Home() {
   const [selectedLayers, setSelectedLayers] = useState('')
@@ -19,6 +20,8 @@ export function Home() {
   const [modelTarget, setModelTarget] = useState('')
 
   const [extension, setExtension] = useState('')
+  const [showGraph, setShowGraph] = useState('')
+  const [clickPoint, setClickPoint] = useState(false)
 
   return (
     <HomeContainer>
@@ -63,6 +66,7 @@ export function Home() {
                 setActualLayer={setActualLayer}
                 selectedLayers={selectedLayers}
                 actualDate={actualDate}
+                setClickPoint={setClickPoint}
               ></DepthSelection>
             ) : null}
             <ColorBar
@@ -81,7 +85,18 @@ export function Home() {
         actualDepth={actualDepth}
         setColorLegend={setColorLegend}
         modelTarget={modelTarget}
+        clickPoint={clickPoint}
+        setClickPoint={setClickPoint}
+        setShowGraph={setShowGraph}
       />
+      {showGraph ? (
+        <GraphPopup
+          showGraph={showGraph}
+          actualLayer={actualLayer}
+          actualDepth={actualDepth}
+          setShowGraph={setShowGraph}
+        ></GraphPopup>
+      ) : null}
     </HomeContainer>
   )
 }

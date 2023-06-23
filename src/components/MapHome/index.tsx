@@ -7,6 +7,7 @@ import { GetMBTiles } from './addMBTiles'
 import { variables } from '../../data/variables'
 import { yearMonths } from '../../data/yearMonths'
 import { limits } from '../../data/limits'
+import { GetGeoblazeValue } from './getGeoblazeValue'
 
 // interface MapProps {
 // }
@@ -20,15 +21,22 @@ interface MapHomeProps {
   actualDepth: any
   setColorLegend: any
   modelTarget: any
+  clickPoint: any
+  setClickPoint: any
+  setShowGraph: any
 }
 
 export function MapHome({
   selectedLayers,
+  actualLayer,
   actualDate,
   setLayerAction,
   actualDepth,
   setColorLegend,
   modelTarget,
+  clickPoint,
+  setClickPoint,
+  setShowGraph,
 }: MapHomeProps) {
   const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY
   const MAPBOX_USERID = 'mapbox/satellite-v9'
@@ -41,6 +49,35 @@ export function MapHome({
       setIsLoading(true)
     }
   }, [map])
+
+  async function handleSetLatlng(e: any) {
+    setClickPoint(false)
+    const getGeoblazeValue = new GetGeoblazeValue(
+      e.latlng,
+      actualLayer,
+      actualDepth,
+      yearMonths,
+    )
+    await getGeoblazeValue.getGeoblaze().then(async function () {
+      // setLoading(false)
+      console.log(getGeoblazeValue.graphData)
+      setShowGraph(getGeoblazeValue.graphData)
+    })
+    // setShowGraph(e.latlng)
+  }
+
+  useEffect(() => {
+    if (clickPoint) {
+      window.alert('Click on a point on the map to generate a graph')
+      map.dragging.disable()
+      map.on('click', handleSetLatlng)
+    } else {
+      if (map) {
+        map.dragging.enable()
+        map.off('click', handleSetLatlng)
+      }
+    }
+  }, [clickPoint])
 
   async function buildAndAddLayer(actual: any) {
     if (selectedLayers === 'Favorable Conditions') {
@@ -174,7 +211,6 @@ export function MapHome({
     const getMBTilesLayer = new GetMBTiles(url)
     await getMBTilesLayer.getLayer().then(async function () {
       const layer = getMBTilesLayer.layer
-      console.log(layer)
       if (layer) {
         layer.options.attribution = tileName[1]
         map.addLayer(layer)

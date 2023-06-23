@@ -3,6 +3,8 @@ import styled from 'styled-components'
 export const LayerSelectionContainer = styled.div`
   width: max-content;
   height: 100vh;
+  max-height: 100vh;
+  overflow-y: auto;
   padding: 0.375rem;
   z-index: 9000;
   box-shadow: -4px 0px 0px ${(props) => props.theme.black};

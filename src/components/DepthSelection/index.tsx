@@ -1,6 +1,8 @@
+import { faChartSimple } from '@fortawesome/free-solid-svg-icons'
 import { yearMonths } from '../../data/yearMonths'
 import { SelectButton } from '../LayerSelection/styles'
 import { DepthSelectionContainer } from './styles'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 interface DepthSelectionProps {
   actualDepth: any
@@ -9,6 +11,7 @@ interface DepthSelectionProps {
   setActualLayer: any
   selectedLayers: any
   actualDate: number
+  setClickPoint: any
 }
 
 export function DepthSelection({
@@ -18,6 +21,7 @@ export function DepthSelection({
   setActualLayer,
   selectedLayers,
   actualDate,
+  setClickPoint,
 }: DepthSelectionProps) {
   const depths = ['1.0', '5.0', '10.0']
 
@@ -37,8 +41,17 @@ export function DepthSelection({
     return actualDepth === depth
   }
 
+  function handleClickGraph() {
+    setClickPoint(true)
+  }
+
   return (
     <DepthSelectionContainer>
+      <div key={'graph'} className="mr-4">
+        <SelectButton onClick={handleClickGraph}>
+          <FontAwesomeIcon icon={faChartSimple} />
+        </SelectButton>
+      </div>
       {depths.map((depth: any) => {
         if (actualDate > yearMonths.indexOf('2021-05') && depth !== '5.0') {
           return (
