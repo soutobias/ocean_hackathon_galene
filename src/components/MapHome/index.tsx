@@ -24,6 +24,7 @@ interface MapHomeProps {
   clickPoint: any
   setClickPoint: any
   setShowGraph: any
+  showGraph: any
 }
 
 export function MapHome({
@@ -37,6 +38,7 @@ export function MapHome({
   clickPoint,
   setClickPoint,
   setShowGraph,
+  showGraph,
 }: MapHomeProps) {
   const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY
   const MAPBOX_USERID = 'mapbox/satellite-v9'
@@ -60,12 +62,10 @@ export function MapHome({
     )
     await getGeoblazeValue.getGeoblaze().then(async function () {
       // setLoading(false)
-      console.log(getGeoblazeValue.graphData)
       setShowGraph(getGeoblazeValue.graphData)
     })
     // setShowGraph(e.latlng)
   }
-
   useEffect(() => {
     if (clickPoint) {
       window.alert('Click on a point on the map to generate a graph')
@@ -78,6 +78,13 @@ export function MapHome({
       }
     }
   }, [clickPoint])
+
+  useEffect(() => {
+    if (map && !showGraph) {
+      map.dragging.enable()
+      map.off('click')
+    }
+  }, [showGraph])
 
   async function buildAndAddLayer(actual: any) {
     if (selectedLayers === 'Favorable Conditions') {

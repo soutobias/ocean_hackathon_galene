@@ -88,6 +88,7 @@ export function Home() {
         clickPoint={clickPoint}
         setClickPoint={setClickPoint}
         setShowGraph={setShowGraph}
+        showGraph={showGraph}
       />
       {showGraph ? (
         <GraphPopup
