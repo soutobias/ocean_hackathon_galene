@@ -43,6 +43,7 @@ export const variables: any = {
     [13.441810909090918, 25.962853333333328],
     ['#dedede', '#ff0000'],
   ],
+  gebco: ['Bathymetry GEBCO', 'm', [-5111, 0], ['#000000', '#ffffff']],
 }
 
 // for the range of colours on the map I would suggest :

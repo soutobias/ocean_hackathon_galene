@@ -29,7 +29,11 @@ export class GetTifLayer {
   async parseGeo() {
     // const scale = chroma.scale(['white', 'black']).domain([-11022, 0]);
     const baseUrl = 'https://pilot-imfe-o.s3-ext.jc.rl.ac.uk/haig-fras/wekeo/'
-    this.url = `${baseUrl}${this.actualLayer}_${this.actualDepth}_${this.actualDate}.tiff`
+    if (this.actualLayer === 'gebco') {
+      this.url = `${baseUrl}${this.actualLayer}.tif`
+    } else {
+      this.url = `${baseUrl}${this.actualLayer}_${this.actualDepth}_${this.actualDate}.tiff`
+    }
 
     // this.url = `${baseUrl}chl_5.0_2013-01.tiff`
 
@@ -54,6 +58,7 @@ export class GetTifLayer {
           const modelTarget = this.modelTarget
           const actualLayer = this.actualLayer
           const action = this.action
+          const variables = this.variables
           this.layer = await new GeoRasterLayer({
             georaster,
             opacity: 1,
@@ -66,6 +71,16 @@ export class GetTifLayer {
               if (action === 'blank layer') {
                 return '#09ff00'
               }
+              if (actualLayer === 'gebco') {
+                if (
+                  population < variables[actualLayer][2][0] ||
+                  population > variables[actualLayer][2][1]
+                ) {
+                  return
+                }
+              }
+              console.log(modelTarget)
+              console.log(limits)
               if (modelTarget) {
                 if (limits[modelTarget]) {
                   if (limits[modelTarget][actualLayer]) {

@@ -38,7 +38,9 @@ export function Home() {
         />
       </SideBar>
       <BottomBar>
-        {selectedLayers && selectedLayers !== 'Posidonia oceanica' ? (
+        {selectedLayers &&
+        selectedLayers !== 'Posidonia oceanica' &&
+        selectedLayers !== 'gebco' ? (
           <RangeSelection
             actualDate={actualDate}
             setActualDate={setActualDate}
@@ -52,13 +54,15 @@ export function Home() {
       <TopRightBar>
         {colorLegend && selectedLayers !== 'Posidonia oceanica' ? (
           <>
-            <DepthSelection
-              actualDepth={actualDepth}
-              setActualDepth={setActualDepth}
-              setLayerAction={setLayerAction}
-              setActualLayer={setActualLayer}
-              selectedLayers={selectedLayers}
-            ></DepthSelection>
+            {selectedLayers !== 'gebco' ? (
+              <DepthSelection
+                actualDepth={actualDepth}
+                setActualDepth={setActualDepth}
+                setLayerAction={setLayerAction}
+                setActualLayer={setActualLayer}
+                selectedLayers={selectedLayers}
+              ></DepthSelection>
+            ) : null}
             <ColorBar
               colorLegend={colorLegend}
               selectedLayers={selectedLayers}

@@ -54,7 +54,7 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
     <ColorBarContainer>
       {colorLegend[0] === 0 && colorLegend[1] === 100 ? (
         <>
-          <div className="flex justify-center font-extrabold">
+          <div className="flex justify-center font-extrabold gap-3">
             <p className="text-white text-lg">Favorable Conditions</p>
             <p className="text-white text-lg"></p>
           </div>
@@ -75,7 +75,7 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
         </>
       ) : (
         <>
-          <div className="flex justify-center font-extrabold">
+          <div className="flex justify-center font-extrabold gap-3">
             <p className="text-white text-lg">{variables[selectedLayers][0]}</p>
             <p className="text-white text-lg">{variables[selectedLayers][1]}</p>
           </div>
