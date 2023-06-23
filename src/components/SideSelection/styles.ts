@@ -4,7 +4,7 @@ export const SideSelectionContainer = styled.div`
   display: flex;
   width: max-content;
   height: 100vh;
-  background-color: ${(props) => props.theme['gray-100']};
+  background-color: ${(props) => props.theme['gray-50']};
   padding: 0.375rem;
   z-index: 9000;
   /* border-radius: 16px; */

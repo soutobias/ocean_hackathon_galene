@@ -8,9 +8,7 @@ interface ColorBarProps {
 }
 
 export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
-  console.log(colorLegend)
-
-  const scale = chroma
+  let scale: any = chroma
     .scale(['#FFFFD4', '#FE9F59', '#E0E0E0'])
     .domain(colorLegend)
 
@@ -19,28 +17,85 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
     const step = (stop - start) / div
     return Array.from({ length: num }, (_, i) => start + step * i)
   }
-  const values = linspace(colorLegend[0], colorLegend[1], 20)
+  let values = linspace(colorLegend[0], colorLegend[1], 20)
+
+  if (colorLegend[0] === 0 && colorLegend[1] === 100) {
+    scale = [
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#09ff00',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+      '#707070',
+    ]
+    values = [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    ]
+  }
+
+  if (!selectedLayers) {
+    return <></>
+  }
 
   return (
     <ColorBarContainer>
-      <div className="flex justify-center font-extrabold">
-        <p className="text-white text-lg">{variables[selectedLayers][0]}</p>
-        <p className="text-white text-lg">{variables[selectedLayers][1]}</p>
-      </div>
-      <div className="flex justify-between font-extrabold">
-        <p className="text-white text-lg">{colorLegend[0].toFixed(2)}</p>
-        <p className="text-white text-lg">{colorLegend[1].toFixed(2)}</p>
-      </div>
-      <div className="flex">
-        {values.map((value) => (
-          <ColorBarItem
-            key={value}
-            style={{ backgroundColor: scale(value).hex() }}
-          >
-            <p>=</p>
-          </ColorBarItem>
-        ))}
-      </div>
+      {colorLegend[0] === 0 && colorLegend[1] === 100 ? (
+        <>
+          <div className="flex justify-center font-extrabold">
+            <p className="text-white text-lg">Favorable Conditions</p>
+            <p className="text-white text-lg"></p>
+          </div>
+          <div className="flex justify-between font-extrabold">
+            <p className="text-white text-lg">YES</p>
+            <p className="text-white text-lg">NO</p>
+          </div>
+          <div className="flex">
+            {values.map((value) => (
+              <ColorBarItem
+                key={value}
+                style={{ backgroundColor: scale[value] }}
+              >
+                <p>=</p>
+              </ColorBarItem>
+            ))}
+          </div>
+        </>
+      ) : (
+        <>
+          <div className="flex justify-center font-extrabold">
+            <p className="text-white text-lg">{variables[selectedLayers][0]}</p>
+            <p className="text-white text-lg">{variables[selectedLayers][1]}</p>
+          </div>
+          <div className="flex justify-between font-extrabold">
+            <p className="text-white text-lg">{colorLegend[0].toFixed(2)}</p>
+            <p className="text-white text-lg">{colorLegend[1].toFixed(2)}</p>
+          </div>
+          <div className="flex">
+            {values.map((value) => (
+              <ColorBarItem
+                key={value}
+                style={{ backgroundColor: scale(value).hex() }}
+              >
+                <p>=</p>
+              </ColorBarItem>
+            ))}
+          </div>
+        </>
+      )}
     </ColorBarContainer>
   )
 }

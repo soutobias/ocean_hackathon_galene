@@ -37,14 +37,16 @@ export function Home() {
         />
       </SideBar>
       <BottomBar>
-        <RangeSelection
-          actualDate={actualDate}
-          setActualDate={setActualDate}
-          setLayerAction={setLayerAction}
-          setActualLayer={setActualLayer}
-          selectedLayers={selectedLayers}
-          extension={extension}
-        />
+        {selectedLayers ? (
+          <RangeSelection
+            actualDate={actualDate}
+            setActualDate={setActualDate}
+            setLayerAction={setLayerAction}
+            setActualLayer={setActualLayer}
+            selectedLayers={selectedLayers}
+            extension={extension}
+          />
+        ) : null}
       </BottomBar>
       <TopRightBar>
         {colorLegend ? (

@@ -42,6 +42,7 @@ export function SideSelection({
         <SideSelectionLink
           title={'Configuration'}
           onClick={() => handleAddExtension('model')}
+          className="pb-3"
         >
           <FontAwesomeIcon icon={faCalculator} />
           {/* <FontAwesomeIcon icon={faChartLine} /> */}

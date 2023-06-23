@@ -9,7 +9,7 @@ export function PredictionSelection({
   modelTarget,
   setModelTarget,
 }: PredictionSelectionProps) {
-  const targets = ['Phytoplancton', 'Whales']
+  const targets = ['Posidonia oceanica', 'Whales']
 
   function handleConfig(target: any) {
     setModelTarget((modelTarget: any) => {
@@ -23,7 +23,7 @@ export function PredictionSelection({
 
   return (
     <LayerSelectionContainer>
-      <h1>MODEL CONFIG</h1>
+      <h1>ECOSYSTEMS</h1>
       <p className="text-center font-bold pb-3 text-2xl">Model Target</p>
       {targets.map((target) => {
         return (
@@ -32,7 +32,9 @@ export function PredictionSelection({
               onClick={() => handleConfig(target)}
               className={isSelected(target) ? 'active' : ''}
             >
-              <p>{target}</p>
+              <p className={target === 'Posidonia oceanica' ? 'italic' : ''}>
+                {target}
+              </p>
             </SelectButton>
           </div>
         )

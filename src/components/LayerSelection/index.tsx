@@ -31,10 +31,9 @@ export function LayerSelection({
     return selectedLayers === variable
   }
 
-  console.log(modelTarget)
   return (
     <LayerSelectionContainer>
-      <h1>MODEL INPUTS</h1>
+      <h1>FEATURES</h1>
       {Object.keys(variables).map((variable) => {
         if (modelTarget === 'Whales' && variable === 'zos') {
           return <></>
@@ -51,6 +50,16 @@ export function LayerSelection({
           )
         }
       })}
+      {modelTarget ? (
+        <div key={'Feature Combination'} className="pb-4">
+          <SelectButton
+            className={isSelected('Feature Combination') ? 'active' : ''}
+            onClick={() => addLayerToMap('Feature Combination')}
+          >
+            <p>Feature Combination</p>
+          </SelectButton>
+        </div>
+      ) : null}
     </LayerSelectionContainer>
   )
 }

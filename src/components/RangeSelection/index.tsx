@@ -40,7 +40,6 @@ export function RangeSelection({
     setLayerAction('time')
     setActualDate(e.target.value)
   }
-  console.log(extension)
   // const [backgroundLimits, setBackGroundLimits] = [startDate, yearMonths.indexOf('2021-05'), endDate ]
 
   function calculateLimit(position: string) {

@@ -11,6 +11,7 @@ export class GetTifLayer {
     variables,
     modelTarget,
     limits,
+    action,
   ) {
     this.actualLayer = actualLayer
     this.actualDepth = actualDepth
@@ -18,6 +19,7 @@ export class GetTifLayer {
     this.variables = variables
     this.modelTarget = modelTarget
     this.limits = limits
+    this.action = action
     this.resolution = 256
     this.url = null
     this.layer = null
@@ -48,25 +50,38 @@ export class GetTifLayer {
           // const scale = chroma
           //   .scale(['#FFFFD4', '#FE9F59', '#E0E0E0'])
           //   .domain(this.scale)
-
+          const limits = this.limits
+          const modelTarget = this.modelTarget
+          const actualLayer = this.actualLayer
+          const action = this.action
           this.layer = await new GeoRasterLayer({
             georaster,
             opacity: 1,
             resolution: this.resolution,
             pixelValuesToColorFn: function (values) {
               const population = values[0]
-              if (this.modelTarget) {
-                if (
-                  population < this.limits[this.modelTarget][0] &&
-                  population > this.limits[this.modelTarget][1]
-                ) {
-                  return '#0C0D0E'
-                }
-              }
               if (!population) {
                 return
               }
-              if (population < 0) return
+              if (action === 'blank layer') {
+                return '#09ff00'
+              }
+              if (modelTarget) {
+                if (limits[modelTarget]) {
+                  if (limits[modelTarget][actualLayer]) {
+                    if (
+                      population < limits[modelTarget][actualLayer][0] ||
+                      population > limits[modelTarget][actualLayer][1]
+                    ) {
+                      console.log(modelTarget, actualLayer, population)
+                      return '#707070'
+                    }
+                  }
+                }
+              }
+              if (action === 'Feature Combination') {
+                return
+              }
               return scale(population).hex()
             },
           })
