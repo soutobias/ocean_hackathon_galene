@@ -6,11 +6,7 @@ import {
 } from './styles'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import {
-  faCalculator,
-  faChartLine,
-  faLayerGroup,
-} from '@fortawesome/free-solid-svg-icons'
+import { faCalculator, faChartLine } from '@fortawesome/free-solid-svg-icons'
 import { LayerSelection } from '../LayerSelection'
 import { PredictionSelection } from '../PredictionSelection'
 
@@ -44,25 +40,18 @@ export function SideSelection({
     <SideSelectionContainer>
       <SideSelectionSide>
         <SideSelectionLink
-          title={'Model Configuration'}
+          title={'Configuration'}
           onClick={() => handleAddExtension('model')}
         >
           <FontAwesomeIcon icon={faCalculator} />
           {/* <FontAwesomeIcon icon={faChartLine} /> */}
         </SideSelectionLink>
         <SideSelectionLink
-          title={'Model Inputs'}
+          title={'Results'}
           onClick={() => handleAddExtension('layer')}
-        >
-          <FontAwesomeIcon icon={faLayerGroup} />
-        </SideSelectionLink>
-        <SideSelectionLink
-          title={'Model Configuration'}
-          onClick={() => handleAddExtension('result')}
         >
           <FontAwesomeIcon icon={faChartLine} />
         </SideSelectionLink>
-
         <img src="favicon_galene.png" className="absolute bottom-7 h-10" />
       </SideSelectionSide>
       {extension === 'layer' ? (
@@ -81,16 +70,6 @@ export function SideSelection({
             modelTarget={modelTarget}
             setModelTarget={setModelTarget}
           ></PredictionSelection>
-        </SideSelectionExtension>
-      ) : extension === 'result' ? (
-        <SideSelectionExtension>
-          <LayerSelection
-            selectedLayers={selectedLayers}
-            setSelectedLayers={setSelectedLayers}
-            setActualLayer={setActualLayer}
-            setLayerAction={setLayerAction}
-            modelTarget={modelTarget}
-          />
         </SideSelectionExtension>
       ) : null}
     </SideSelectionContainer>

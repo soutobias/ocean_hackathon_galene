@@ -7,6 +7,7 @@ export const RangeSelectionContainer = styled.div`
     0 0 5px ${(props) => props.theme.black};
   width: 65vw;
   z-index: 9000;
+  font-size: 1rem;
   input[type='range'] {
     :focus {
       box-shadow: none;

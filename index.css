@@ -54,3 +54,7 @@
   margin: 0 auto;
   width: 75%;
 }
+
+.text-transformation{
+  transform: rotate(-0deg)
+}

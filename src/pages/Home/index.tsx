@@ -10,7 +10,7 @@ import { yearMonths } from '../../data/yearMonths'
 export function Home() {
   const [selectedLayers, setSelectedLayers] = useState('')
   const [actualLayer, setActualLayer] = useState('')
-  const [actualDate, setActualDate] = useState(yearMonths.length - 1)
+  const [actualDate, setActualDate] = useState(yearMonths.indexOf('2021-05'))
   const [actualDepth, setActualDepth] = useState('1.0')
   const [layerAction, setLayerAction] = useState('')
 

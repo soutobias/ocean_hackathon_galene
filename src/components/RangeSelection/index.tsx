@@ -49,11 +49,23 @@ export function RangeSelection({
         {years.map((year: any) => {
           return (
             <div key={year} className="text-center font-extrabold">
-              <p>{year}</p>
+              <p
+                className={
+                  year > 2021
+                    ? 'text-red-500 text-transformation'
+                    : 'text-transformation'
+                }
+              >
+                {year}
+              </p>
               <p className="text-xs">|</p>
             </div>
           )
         })}
+        <div className="text-center font-extrabold">
+          <p className="opacity-0">2026</p>
+          <p className="text-xs opacity-0">|</p>
+        </div>
       </div>
       <input
         type="range"
