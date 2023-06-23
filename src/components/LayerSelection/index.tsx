@@ -56,6 +56,14 @@ export function LayerSelection({
           )
         }
       })}
+      <div key={'Posidonia oceanica'} className="pb-4">
+        <SelectButton
+          className={isSelected('Posidonia oceanica') ? 'active' : ''}
+          onClick={() => addLayerToMap('Posidonia oceanica')}
+        >
+          <p>Posidonia oceanica</p>
+        </SelectButton>
+      </div>
       {modelTarget === 'Posidonia oceanica' ? (
         <div key={'Favorable Conditions'} className="pb-4">
           <SelectButton

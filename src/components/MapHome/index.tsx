@@ -112,8 +112,15 @@ export function MapHome({
       if (Object.keys(variables).includes(layer.options.attribution)) {
         map.removeLayer(layer)
       }
+      if (layer.options.attribution === 'Posidonia oceanica') {
+        map.removeLayer(layer)
+      }
     })
+
     if (selectedLayers) {
+      if (selectedLayers === 'Posidonia oceanica') {
+        addMBTileLayer(['wekeoseagrass', selectedLayers])
+      }
       buildAndAddLayer(selectedLayers)
       // setColorLegend([0, 100])
       setLayerAction('')
@@ -157,18 +164,19 @@ export function MapHome({
           return false
         }
       })
-      addMBTileLayer()
+      addMBTileLayer(['wekeompa', actual[0]])
+      // addMBTileLayer('wekeoseagrasspoints')
     }
   }, [isLoading])
 
-  async function addMBTileLayer() {
-    const url =
-      'https://imfe-pilot-mbtiles.noc.ac.uk/v1/tiles/wekeompa@1.0.0/{z}/{x}/{y}.mvt'
+  async function addMBTileLayer(tileName: string[]) {
+    const url = `https://imfe-pilot-mbtiles.noc.ac.uk/v1/tiles/${tileName[0]}@1.0.0/{z}/{x}/{y}.mvt`
     const getMBTilesLayer = new GetMBTiles(url)
     await getMBTilesLayer.getLayer().then(async function () {
       const layer = getMBTilesLayer.layer
+      console.log(layer)
       if (layer) {
-        layer.options.attribution = 'MPA Layer'
+        layer.options.attribution = tileName[1]
         map.addLayer(layer)
         layer.on('click', async function (e: any) {
           const strContent: string[] = []
@@ -203,25 +211,6 @@ export function MapHome({
         <TileLayer
           url={`https://api.mapbox.com/styles/v1/${MAPBOX_USERID}/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_API_KEY}`}
         />
-
-        {/* <LayersControl>
-          <LayersControl.BaseLayer name="OSM">
-            <Pane name="OSM" style={{ zIndex: -1 }}>
-              <TileLayer
-                attribution={'© OpenStreetMap'}
-                maxZoom={30}
-                url={'https://tile.openstreetmap.org/{z}/{x}/{y}.png'}
-              />
-            </Pane>
-          </LayersControl.BaseLayer>
-          <LayersControl.BaseLayer checked name="Satellite">
-            <Pane name="Satellite" style={{ zIndex: -1 }}>
-              <TileLayer
-                url={`https://api.mapbox.com/styles/v1/${MAPBOX_USERID}/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_API_KEY}`}
-              />
-            </Pane>
-          </LayersControl.BaseLayer>
-        </LayersControl> */}
       </MapContainer>
     </div>
   )

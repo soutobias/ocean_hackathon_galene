@@ -32,7 +32,7 @@ export function RangeSelection({
   // const [action, setAction] = useState('')
 
   function handleChange(e: any) {
-    if (selectedLayers.empty) {
+    if (!selectedLayers) {
       return
     }
     setActualLayer(selectedLayers)

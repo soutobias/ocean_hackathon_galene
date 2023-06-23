@@ -38,7 +38,7 @@ export function Home() {
         />
       </SideBar>
       <BottomBar>
-        {selectedLayers ? (
+        {selectedLayers && selectedLayers !== 'Posidonia oceanica' ? (
           <RangeSelection
             actualDate={actualDate}
             setActualDate={setActualDate}
@@ -50,7 +50,7 @@ export function Home() {
         ) : null}
       </BottomBar>
       <TopRightBar>
-        {colorLegend ? (
+        {colorLegend && selectedLayers !== 'Posidonia oceanica' ? (
           <>
             <DepthSelection
               actualDepth={actualDepth}

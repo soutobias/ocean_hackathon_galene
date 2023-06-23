@@ -10,6 +10,10 @@ interface ColorBarProps {
 export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
   let scale: any
 
+  if (!selectedLayers || selectedLayers === 'Posidonia oceanica') {
+    return <></>
+  }
+
   function linspace(start: number, stop: number, num: number, endpoint = true) {
     const div = endpoint ? num - 1 : num
     const step = (stop - start) / div
@@ -46,10 +50,6 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
     scale = chroma.scale(variables[selectedLayers][3]).domain(colorLegend)
   }
 
-  console.log(scale)
-  if (!selectedLayers) {
-    return <></>
-  }
   return (
     <ColorBarContainer>
       {colorLegend[0] === 0 && colorLegend[1] === 100 ? (
