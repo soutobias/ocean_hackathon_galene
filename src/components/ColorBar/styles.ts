@@ -4,6 +4,7 @@ export const ColorBarContainer = styled.div`
   padding: 0.375rem;
   z-index: 9000;
   display: block;
+  background-color: rgba(0, 0, 0, 0.4);
 `
 
 export const ColorBarItem = styled.div`

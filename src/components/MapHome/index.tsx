@@ -4,7 +4,9 @@ import { useEffect, useState } from 'react'
 import L from 'leaflet'
 import { GetTifLayer } from './addGeoraster'
 import { GetMBTiles } from './addMBTiles'
-import { yearMonth } from '../RangeSelection/months'
+import { variables } from '../../data/variables'
+import { yearMonths } from '../../data/yearMonths'
+import { limits } from '../../data/limits'
 
 // interface MapProps {
 // }
@@ -17,6 +19,7 @@ interface MapHomeProps {
   setLayerAction: any
   actualDepth: any
   setColorLegend: any
+  modelTarget: any
 }
 
 export function MapHome({
@@ -27,6 +30,7 @@ export function MapHome({
   setLayerAction,
   actualDepth,
   setColorLegend,
+  modelTarget,
 }: MapHomeProps) {
   const MAPBOX_API_KEY = import.meta.env.VITE_MAPBOX_API_KEY
   const MAPBOX_USERID = 'mapbox/satellite-v9'
@@ -44,52 +48,52 @@ export function MapHome({
     const getTifLayer = new GetTifLayer(
       actual,
       actualDepth,
-      yearMonth[actualDate],
+      yearMonths[actualDate],
+      variables,
+      modelTarget,
+      limits,
     )
     await getTifLayer.parseGeo().then(function () {
       map.addLayer(getTifLayer.layer)
       setColorLegend(getTifLayer.scale)
     })
   }
-  function addMapLayers() {
-    map.eachLayer(function (layer: any) {
-      if (actualLayer.includes(layer.options.attribution)) {
-        setLayerAction('')
-        return false
-      }
-    })
-    buildAndAddLayer(actualLayer[0])
-  }
+  console.log(layerAction, actualLayer)
 
-  function removeMapLayers() {
-    map.eachLayer(function (layer: any) {
-      if (actualLayer.includes(layer.options.attribution)) {
-        map.removeLayer(layer)
-        setLayerAction('')
-      }
-    })
-  }
+  // function addMapLayers() {
+  //   map.eachLayer(function (layer: any) {
+  //     if (actualLayer === layer.options.attribution) {
+  //       setLayerAction('')
+  //       return false
+  //     }
+  //   })
+  //   buildAndAddLayer(actualLayer)
+  // }
+
+  // function removeMapLayers() {
+  //   map.eachLayer(function (layer: any) {
+  //     if (actualLayer === layer.options.attribution) {
+  //       map.removeLayer(layer)
+  //       setLayerAction('')
+  //     }
+  //   })
+  // }
 
   function changeMapLayers() {
-    map.eachLayer(function (layer: any) {
-      if (actualLayer.includes(layer.options.attribution)) {
-        map.removeLayer(layer)
-        buildAndAddLayer(layer.options.attribution)
-        setLayerAction('')
-      }
-    })
+    if (selectedLayers) {
+      map.eachLayer(function (layer: any) {
+        if (Object.keys(variables).includes(layer.options.attribution)) {
+          map.removeLayer(layer)
+        }
+      })
+      buildAndAddLayer(selectedLayers)
+      setLayerAction('')
+    }
   }
 
   useEffect(() => {
     if (map) {
-      if (layerAction === 'add') {
-        addMapLayers()
-      } else if (layerAction === 'remove') {
-        removeMapLayers()
-        if (selectedLayers.empty) {
-          setColorLegend(null)
-        }
-      }
+      changeMapLayers()
     }
   }, [selectedLayers])
 
@@ -98,6 +102,12 @@ export function MapHome({
       changeMapLayers()
     }
   }, [actualDate])
+
+  useEffect(() => {
+    if (map) {
+      changeMapLayers()
+    }
+  }, [modelTarget])
 
   useEffect(() => {
     if (map) {

@@ -6,8 +6,11 @@ import {
 } from './styles'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faChartLine, faLayerGroup } from '@fortawesome/free-solid-svg-icons'
-import { useState } from 'react'
+import {
+  faCalculator,
+  faChartLine,
+  faLayerGroup,
+} from '@fortawesome/free-solid-svg-icons'
 import { LayerSelection } from '../LayerSelection'
 import { PredictionSelection } from '../PredictionSelection'
 
@@ -18,6 +21,10 @@ interface SideSelectionProps {
   setActualLayer: any
   layerAction: any
   setLayerAction: any
+  modelTarget: any
+  setModelTarget: any
+  extension: any
+  setExtension: any
 }
 
 export function SideSelection({
@@ -25,29 +32,37 @@ export function SideSelection({
   setSelectedLayers,
   setActualLayer,
   setLayerAction,
+  modelTarget,
+  setModelTarget,
+  extension,
+  setExtension,
 }: SideSelectionProps) {
-  const [extension, setExtension] = useState('')
-
   function handleAddExtension(value: string) {
-    setExtension((extension) => (extension === value ? '' : value))
+    setExtension((extension: any) => (extension === value ? '' : value))
   }
   return (
     <SideSelectionContainer>
       <SideSelectionSide>
         <SideSelectionLink
-          title={'Add Layers'}
-          id={'Data Exploration'}
+          title={'Model Configuration'}
+          onClick={() => handleAddExtension('model')}
+        >
+          <FontAwesomeIcon icon={faCalculator} />
+          {/* <FontAwesomeIcon icon={faChartLine} /> */}
+        </SideSelectionLink>
+        <SideSelectionLink
+          title={'Model Inputs'}
           onClick={() => handleAddExtension('layer')}
         >
           <FontAwesomeIcon icon={faLayerGroup} />
         </SideSelectionLink>
         <SideSelectionLink
-          title={'Add Layers'}
-          id={'Data Exploration'}
-          onClick={() => handleAddExtension('model')}
+          title={'Model Configuration'}
+          onClick={() => handleAddExtension('result')}
         >
           <FontAwesomeIcon icon={faChartLine} />
         </SideSelectionLink>
+
         <img src="favicon_galene.png" className="absolute bottom-7 h-10" />
       </SideSelectionSide>
       {extension === 'layer' ? (
@@ -57,11 +72,25 @@ export function SideSelection({
             setSelectedLayers={setSelectedLayers}
             setActualLayer={setActualLayer}
             setLayerAction={setLayerAction}
+            modelTarget={modelTarget}
           />
         </SideSelectionExtension>
       ) : extension === 'model' ? (
         <SideSelectionExtension>
-          <PredictionSelection></PredictionSelection>
+          <PredictionSelection
+            modelTarget={modelTarget}
+            setModelTarget={setModelTarget}
+          ></PredictionSelection>
+        </SideSelectionExtension>
+      ) : extension === 'result' ? (
+        <SideSelectionExtension>
+          <LayerSelection
+            selectedLayers={selectedLayers}
+            setSelectedLayers={setSelectedLayers}
+            setActualLayer={setActualLayer}
+            setLayerAction={setLayerAction}
+            modelTarget={modelTarget}
+          />
         </SideSelectionExtension>
       ) : null}
     </SideSelectionContainer>

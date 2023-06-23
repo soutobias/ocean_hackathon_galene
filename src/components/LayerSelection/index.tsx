@@ -1,3 +1,4 @@
+import { variables } from '../../data/variables'
 import { LayerSelectionContainer, SelectButton } from './styles'
 
 interface LayerSelectionProps {
@@ -5,6 +6,7 @@ interface LayerSelectionProps {
   setSelectedLayers: any
   setActualLayer: any
   setLayerAction: any
+  modelTarget: any
 }
 
 export function LayerSelection({
@@ -12,56 +14,42 @@ export function LayerSelection({
   setSelectedLayers,
   setActualLayer,
   setLayerAction,
+  modelTarget,
 }: LayerSelectionProps) {
-  const variables: any = {
-    chl: 'Chlorophyll',
-    phyc: 'Phytoplankton',
-    no3: 'Nitrogen',
-    po4: 'Phosporus',
-    o2: 'Dissolved Oxigen',
-    ph: 'PH',
-    so: 'Salinity',
-    zos: 'Water Level ',
-    avg_temp_C: 'Mean Temperature (°C)',
-  }
-
   function addLayerToMap(variable: any) {
     if (isSelected(variable)) {
       setLayerAction('remove')
-      setActualLayer([variable])
-      setSelectedLayers((selectedLayers: any) => {
-        const copy = [...selectedLayers]
-        return copy.filter(function (e) {
-          return e !== variable
-        })
-      })
+      setActualLayer(variable)
+      setSelectedLayers('')
     } else {
       setLayerAction('add')
-      setActualLayer([variable])
-      setSelectedLayers([...selectedLayers, variable])
+      setActualLayer(variable)
+      setSelectedLayers(variable)
     }
   }
   function isSelected(variable: string) {
-    if (selectedLayers.includes(variable)) {
-      return true
-    }
-    return false
+    return selectedLayers === variable
   }
 
+  console.log(modelTarget)
   return (
     <LayerSelectionContainer>
       <h1>MODEL INPUTS</h1>
       {Object.keys(variables).map((variable) => {
-        return (
-          <div key={variable} className="pb-4">
-            <SelectButton
-              className={isSelected(variable) ? 'active' : ''}
-              onClick={() => addLayerToMap(variable)}
-            >
-              <p>{variables[variable]}</p>
-            </SelectButton>
-          </div>
-        )
+        if (modelTarget === 'Whales' && variable === 'zos') {
+          return <></>
+        } else {
+          return (
+            <div key={variable} className="pb-4">
+              <SelectButton
+                className={isSelected(variable) ? 'active' : ''}
+                onClick={() => addLayerToMap(variable)}
+              >
+                <p>{variables[variable][0]}</p>
+              </SelectButton>
+            </div>
+          )
+        }
       })}
     </LayerSelectionContainer>
   )

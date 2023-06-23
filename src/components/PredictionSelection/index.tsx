@@ -1,25 +1,38 @@
 import { LayerSelectionContainer, SelectButton } from '../LayerSelection/styles'
 
-// interface SideSelectionProps {
-// }
+interface PredictionSelectionProps {
+  modelTarget: any
+  setModelTarget: any
+}
 
-export function PredictionSelection() {
-  const variables: any = {
-    prediction: 'Prediction',
+export function PredictionSelection({
+  modelTarget,
+  setModelTarget,
+}: PredictionSelectionProps) {
+  const targets = ['Phytoplancton', 'Whales']
+
+  function handleConfig(target: any) {
+    setModelTarget((modelTarget: any) => {
+      return modelTarget === target ? '' : target
+    })
   }
 
-  function addLayerToMap(variable: any) {
-    console.log(variable)
+  function isSelected(target: string) {
+    return modelTarget === target
   }
 
   return (
     <LayerSelectionContainer>
-      <h1>MODEL RESULTS</h1>
-      {Object.keys(variables).map((variable) => {
+      <h1>MODEL CONFIG</h1>
+      <p className="text-center font-bold pb-3 text-2xl">Model Target</p>
+      {targets.map((target) => {
         return (
-          <div key={variable} className="pb-4">
-            <SelectButton onClick={() => addLayerToMap(variable)}>
-              <p>{variables[variable]}</p>
+          <div key={target} className="pb-4">
+            <SelectButton
+              onClick={() => handleConfig(target)}
+              className={isSelected(target) ? 'active' : ''}
+            >
+              <p>{target}</p>
             </SelectButton>
           </div>
         )

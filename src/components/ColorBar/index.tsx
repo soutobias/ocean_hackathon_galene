@@ -1,12 +1,13 @@
 import chroma from 'chroma-js'
 import { ColorBarContainer, ColorBarItem } from './styles'
+import { variables } from '../../data/variables'
 
 interface ColorBarProps {
   colorLegend: any
-  setColorLegend: any
+  selectedLayers: any
 }
 
-export function ColorBar({ colorLegend }: ColorBarProps) {
+export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
   console.log(colorLegend)
 
   const scale = chroma
@@ -22,6 +23,10 @@ export function ColorBar({ colorLegend }: ColorBarProps) {
 
   return (
     <ColorBarContainer>
+      <div className="flex justify-center font-extrabold">
+        <p className="text-white text-lg">{variables[selectedLayers][0]}</p>
+        <p className="text-white text-lg">{variables[selectedLayers][1]}</p>
+      </div>
       <div className="flex justify-between font-extrabold">
         <p className="text-white text-lg">{colorLegend[0].toFixed(2)}</p>
         <p className="text-white text-lg">{colorLegend[1].toFixed(2)}</p>
