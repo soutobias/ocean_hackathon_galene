@@ -8,9 +8,7 @@ interface ColorBarProps {
 }
 
 export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
-  let scale: any = chroma
-    .scale(['#FFFFD4', '#FE9F59', '#E0E0E0'])
-    .domain(colorLegend)
+  let scale: any
 
   function linspace(start: number, stop: number, num: number, endpoint = true) {
     const div = endpoint ? num - 1 : num
@@ -18,7 +16,6 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
     return Array.from({ length: num }, (_, i) => start + step * i)
   }
   let values = linspace(colorLegend[0], colorLegend[1], 20)
-
   if (colorLegend[0] === 0 && colorLegend[1] === 100) {
     scale = [
       '#09ff00',
@@ -45,8 +42,11 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
     values = [
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
     ]
+  } else {
+    scale = chroma.scale(variables[selectedLayers][3]).domain(colorLegend)
   }
 
+  console.log(scale)
   if (!selectedLayers) {
     return <></>
   }

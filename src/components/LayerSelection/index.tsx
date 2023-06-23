@@ -20,6 +20,7 @@ export function LayerSelection({
 }: LayerSelectionProps) {
   function addLayerToMap(variable: any) {
     if (isSelected(variable)) {
+      setColorLegend(null)
       setLayerAction('remove')
       setActualLayer(variable)
       setSelectedLayers('')
