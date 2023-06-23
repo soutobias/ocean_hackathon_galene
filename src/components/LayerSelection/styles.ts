@@ -8,8 +8,9 @@ export const LayerSelectionContainer = styled.div`
   box-shadow: -4px 0px 0px ${(props) => props.theme.black};
   display: block;
   h1 {
+    text-align: center;
     color: ${(props) => props.theme['blue-500']};
-    padding-bottom: 1rem;
+    padding-bottom: 2rem;
   }
 `
 

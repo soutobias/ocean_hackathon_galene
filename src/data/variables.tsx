@@ -1,31 +1,31 @@
 export const variables: any = {
   chl: [
     'Chlorophyll',
-    'mg/L',
+    'mg/m3',
     [0.0442142405, 0.26105115749999996],
     ['#FFFFD4', '#FE9F59', '#ff0000'],
   ],
   phyc: [
     'Phytoplankton',
-    '',
+    'mmol/m3',
     [0.210064535, 1.102216925],
     ['#FFFFD4', '#FE9F59', '#ff0000'],
   ],
   no3: [
     'Nitrogen',
-    '',
+    'mmol/m3',
     [0.3782260075, 1.798195],
     ['#FFFFD4', '#FE9F59', '#ff0000'],
   ],
   po4: [
     'Phosporus',
-    '',
+    'mmol/m3',
     [0.0069639635, 0.0917562975],
     ['#FFFFD4', '#FE9F59', '#ff0000'],
   ],
   o2: [
     'Dissolved Oxigen',
-    '',
+    'mmol/m3',
     [214.82448499999998, 252.42014],
     ['#FFFFD4', '#FE9F59', '#ff0000'],
   ],

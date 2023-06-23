@@ -13,9 +13,9 @@ import { limits } from '../../data/limits'
 
 interface MapHomeProps {
   selectedLayers: any
-  actualLayer: any
+  actualLayer?: any
   actualDate: any
-  layerAction: any
+  layerAction?: any
   setLayerAction: any
   actualDepth: any
   setColorLegend: any
@@ -24,9 +24,7 @@ interface MapHomeProps {
 
 export function MapHome({
   selectedLayers,
-  actualLayer,
   actualDate,
-  layerAction,
   setLayerAction,
   actualDepth,
   setColorLegend,

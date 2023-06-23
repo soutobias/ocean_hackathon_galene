@@ -24,7 +24,7 @@ export function PredictionSelection({
   return (
     <LayerSelectionContainer>
       <h1>ECOSYSTEMS</h1>
-      <p className="text-center font-bold pb-3 text-2xl">Model Target</p>
+      {/* <p className="text-center font-bold pb-3 text-2xl">Model Target</p> */}
       {targets.map((target) => {
         return (
           <div key={target} className="pb-4">

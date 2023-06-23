@@ -16,7 +16,7 @@ interface RangeSelectionProps {
   setLayerAction: any
   setActualLayer: any
   selectedLayers: any
-  extension: any
+  extension?: any
 }
 
 export function RangeSelection({
@@ -25,7 +25,6 @@ export function RangeSelection({
   setLayerAction,
   setActualLayer,
   selectedLayers,
-  extension,
 }: RangeSelectionProps) {
   const startDate = 0
   const endDate = yearMonths.length - 1
