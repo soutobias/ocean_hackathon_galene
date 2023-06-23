@@ -34,6 +34,7 @@ export function Home() {
           setModelTarget={setModelTarget}
           extension={extension}
           setExtension={setExtension}
+          setColorLegend={setColorLegend}
         />
       </SideBar>
       <BottomBar>

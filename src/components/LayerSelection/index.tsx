@@ -7,6 +7,7 @@ interface LayerSelectionProps {
   setActualLayer: any
   setLayerAction: any
   modelTarget: any
+  setColorLegend: any
 }
 
 export function LayerSelection({
@@ -15,6 +16,7 @@ export function LayerSelection({
   setActualLayer,
   setLayerAction,
   modelTarget,
+  setColorLegend,
 }: LayerSelectionProps) {
   function addLayerToMap(variable: any) {
     if (isSelected(variable)) {
@@ -22,6 +24,9 @@ export function LayerSelection({
       setActualLayer(variable)
       setSelectedLayers('')
     } else {
+      if (variable === 'Favorable Conditions') {
+        setColorLegend([0, 100])
+      }
       setLayerAction('add')
       setActualLayer(variable)
       setSelectedLayers(variable)
@@ -50,13 +55,13 @@ export function LayerSelection({
           )
         }
       })}
-      {modelTarget ? (
-        <div key={'Feature Combination'} className="pb-4">
+      {modelTarget === 'Posidonia oceanica' ? (
+        <div key={'Favorable Conditions'} className="pb-4">
           <SelectButton
-            className={isSelected('Feature Combination') ? 'active' : ''}
-            onClick={() => addLayerToMap('Feature Combination')}
+            className={isSelected('Favorable Conditions') ? 'active' : ''}
+            onClick={() => addLayerToMap('Favorable Conditions')}
           >
-            <p>Feature Combination</p>
+            <p>Favorable Conditions</p>
           </SelectButton>
         </div>
       ) : null}

@@ -50,7 +50,6 @@ export function ColorBar({ colorLegend, selectedLayers }: ColorBarProps) {
   if (!selectedLayers) {
     return <></>
   }
-
   return (
     <ColorBarContainer>
       {colorLegend[0] === 0 && colorLegend[1] === 100 ? (

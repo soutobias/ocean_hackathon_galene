@@ -73,13 +73,12 @@ export class GetTifLayer {
                       population < limits[modelTarget][actualLayer][0] ||
                       population > limits[modelTarget][actualLayer][1]
                     ) {
-                      console.log(modelTarget, actualLayer, population)
                       return '#707070'
                     }
                   }
                 }
               }
-              if (action === 'Feature Combination') {
+              if (action === 'Favorable Conditions') {
                 return
               }
               return scale(population).hex()

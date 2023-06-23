@@ -21,6 +21,7 @@ interface SideSelectionProps {
   setModelTarget: any
   extension: any
   setExtension: any
+  setColorLegend: any
 }
 
 export function SideSelection({
@@ -32,6 +33,7 @@ export function SideSelection({
   setModelTarget,
   extension,
   setExtension,
+  setColorLegend,
 }: SideSelectionProps) {
   function handleAddExtension(value: string) {
     setExtension((extension: any) => (extension === value ? '' : value))
@@ -63,6 +65,7 @@ export function SideSelection({
             setActualLayer={setActualLayer}
             setLayerAction={setLayerAction}
             modelTarget={modelTarget}
+            setColorLegend={setColorLegend}
           />
         </SideSelectionExtension>
       ) : extension === 'model' ? (

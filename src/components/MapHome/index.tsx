@@ -45,7 +45,7 @@ export function MapHome({
   }, [map])
 
   async function buildAndAddLayer(actual: any) {
-    if (selectedLayers === 'Feature Combination') {
+    if (selectedLayers === 'Favorable Conditions') {
       const getTifLayer = new GetTifLayer(
         Object.keys(variables)[0],
         actualDepth,
@@ -57,7 +57,6 @@ export function MapHome({
       )
       await getTifLayer.parseGeo().then(function () {
         map.addLayer(getTifLayer.layer)
-        setColorLegend([0, 100])
       })
       Object.keys(variables).forEach(async (variable: any) => {
         const getTifLayer = new GetTifLayer(
@@ -118,6 +117,7 @@ export function MapHome({
     })
     if (selectedLayers) {
       buildAndAddLayer(selectedLayers)
+      // setColorLegend([0, 100])
       setLayerAction('')
     } else {
       setColorLegend(null)
