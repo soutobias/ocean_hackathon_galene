@@ -9,7 +9,17 @@ export default {
     './App.tsx',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        red: {
+          100: '#ffa6a6',
+          500: '#fc0505',
+        },
+        blue: {
+          500: '#138a8a',
+        },
+      },
+    },
   },
   plugins: [require('@tailwindcss/forms')],
 }

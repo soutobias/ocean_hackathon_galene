@@ -70,7 +70,6 @@ export const RangeValue = styled.div`
   margin-top: 1rem;
   p {
     /* box-shadow: 10px 10px 10px rgba(0, 0, 0, 1); */
-    background: ${(props) => props.theme['blue-500']};
     width: max-content;
     padding: 0.5rem;
     border-radius: 8px;

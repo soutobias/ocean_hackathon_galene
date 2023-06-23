@@ -41,7 +41,36 @@ export function RangeSelection({
     setActualDate(e.target.value)
   }
   console.log(extension)
-  // const backgroundLimits =
+  // const [backgroundLimits, setBackGroundLimits] = [startDate, yearMonths.indexOf('2021-05'), endDate ]
+
+  function calculateLimit(position: string) {
+    if (position === 'before') {
+      if (actualDate < yearMonths.indexOf('2021-05')) {
+        return actualDate
+      } else {
+        return yearMonths.indexOf('2021-05')
+      }
+    } else if (position === 'after') {
+      if (actualDate > yearMonths.indexOf('2021-05')) {
+        return actualDate
+      } else {
+        return yearMonths.indexOf('2021-05')
+      }
+    }
+  }
+  const backgroundLimits = [
+    startDate,
+    ((calculateLimit('before') - startDate) / endDate) * 100,
+    ((yearMonths.indexOf('2021-05') - startDate) / endDate) * 100,
+    ((calculateLimit('after') - startDate) / endDate) * 100,
+    100,
+  ]
+
+  // `linear-gradient(to right, #138a8a 0%, #138a8a ${Math.floor(
+  //   ((actualDate - startDate) / endDate) * 100,
+  // )}%, #fff ${Math.floor(
+  //   ((actualDate - startDate) / endDate) * 100,
+  // )}%, white 100%)`
 
   return (
     <RangeSelectionContainer>
@@ -73,11 +102,7 @@ export function RangeSelection({
         max={endDate}
         step={1}
         style={{
-          background: `linear-gradient(to right, #138a8a 0%, #138a8a ${Math.floor(
-            ((actualDate - startDate) / endDate) * 100,
-          )}%, #fff ${Math.floor(
-            ((actualDate - startDate) / endDate) * 100,
-          )}%, white 100%)`,
+          background: `linear-gradient(to right, #138a8a ${backgroundLimits[0]}%, #138a8a ${backgroundLimits[1]}%, white ${backgroundLimits[1]}%, white ${backgroundLimits[2]}%, #fc0505 ${backgroundLimits[2]}%, #fc0505 ${backgroundLimits[3]}%, #ffa6a6 ${backgroundLimits[3]}%, #ffa6a6 ${backgroundLimits[4]}%)`,
         }}
         value={actualDate}
         onChange={handleChange}
@@ -90,7 +115,15 @@ export function RangeSelection({
           )}%`,
         }}
       >
-        <p>{yearMonths[actualDate]}</p>
+        <p
+          className={
+            actualDate <= yearMonths.indexOf('2021-05')
+              ? 'bg-blue-500'
+              : 'bg-red-500'
+          }
+        >
+          {yearMonths[actualDate]}
+        </p>
       </RangeValue>
       {/* <div className="flex gap-4 justify-center">
         <FontAwesomeIcon
