@@ -40,7 +40,7 @@ export function RangeSelection({
     setLayerAction('time')
     setActualDate(e.target.value)
   }
-
+  console.log(extension)
   // const backgroundLimits =
 
   return (
