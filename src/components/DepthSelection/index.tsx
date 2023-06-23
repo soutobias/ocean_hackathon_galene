@@ -1,3 +1,4 @@
+import { yearMonths } from '../../data/yearMonths'
 import { SelectButton } from '../LayerSelection/styles'
 import { DepthSelectionContainer } from './styles'
 
@@ -7,6 +8,7 @@ interface DepthSelectionProps {
   setLayerAction: any
   setActualLayer: any
   selectedLayers: any
+  actualDate: number
 }
 
 export function DepthSelection({
@@ -15,6 +17,7 @@ export function DepthSelection({
   setLayerAction,
   setActualLayer,
   selectedLayers,
+  actualDate,
 }: DepthSelectionProps) {
   const depths = ['1.0', '5.0', '10.0']
 
@@ -37,20 +40,34 @@ export function DepthSelection({
   return (
     <DepthSelectionContainer>
       {depths.map((depth: any) => {
-        return (
-          <div key={depth} className="mr-4">
-            <SelectButton
-              className={isSelected(depth) ? 'active' : ''}
-              onClick={() => addLayerToMap(depth)}
-            >
-              <p>
-                {parseInt(depth) === 1
-                  ? `${parseInt(depth)} meter`
-                  : `${parseInt(depth)} meters`}
-              </p>
-            </SelectButton>
-          </div>
-        )
+        if (actualDate > yearMonths.indexOf('2021-05') && depth !== '5.0') {
+          return (
+            <div key={depth} className="mr-4">
+              <SelectButton style={{ cursor: 'not-allowed' }} disabled>
+                <p>
+                  {parseInt(depth) === 1
+                    ? `${parseInt(depth)} meter`
+                    : `${parseInt(depth)} meters`}
+                </p>
+              </SelectButton>
+            </div>
+          )
+        } else {
+          return (
+            <div key={depth} className="mr-4">
+              <SelectButton
+                className={isSelected(depth) ? 'active' : ''}
+                onClick={() => addLayerToMap(depth)}
+              >
+                <p>
+                  {parseInt(depth) === 1
+                    ? `${parseInt(depth)} meter`
+                    : `${parseInt(depth)} meters`}
+                </p>
+              </SelectButton>
+            </div>
+          )
+        }
       })}
     </DepthSelectionContainer>
   )

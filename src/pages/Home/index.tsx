@@ -48,6 +48,7 @@ export function Home() {
             setActualLayer={setActualLayer}
             selectedLayers={selectedLayers}
             extension={extension}
+            setActualDepth={setActualDepth}
           />
         ) : null}
       </BottomBar>
@@ -61,6 +62,7 @@ export function Home() {
                 setLayerAction={setLayerAction}
                 setActualLayer={setActualLayer}
                 selectedLayers={selectedLayers}
+                actualDate={actualDate}
               ></DepthSelection>
             ) : null}
             <ColorBar

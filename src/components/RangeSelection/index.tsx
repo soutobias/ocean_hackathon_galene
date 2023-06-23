@@ -6,6 +6,7 @@
 // } from '@fortawesome/free-solid-svg-icons'
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 // import { useState } from 'react'
+import { useEffect } from 'react'
 import { yearMonths } from '../../data/yearMonths'
 import { years } from '../../data/years'
 import { RangeSelectionContainer, RangeValue } from './styles'
@@ -17,6 +18,7 @@ interface RangeSelectionProps {
   setActualLayer: any
   selectedLayers: any
   extension?: any
+  setActualDepth: any
 }
 
 export function RangeSelection({
@@ -25,6 +27,7 @@ export function RangeSelection({
   setLayerAction,
   setActualLayer,
   selectedLayers,
+  setActualDepth,
 }: RangeSelectionProps) {
   const startDate = 0
   const endDate = yearMonths.length - 1
@@ -39,6 +42,7 @@ export function RangeSelection({
     setLayerAction('time')
     setActualDate(e.target.value)
   }
+
   // const [backgroundLimits, setBackGroundLimits] = [startDate, yearMonths.indexOf('2021-05'), endDate ]
 
   function calculateLimit(position: string) {
@@ -64,6 +68,11 @@ export function RangeSelection({
     100,
   ]
 
+  useEffect(() => {
+    if (actualDate > yearMonths.indexOf('2021-05')) {
+      setActualDepth('5.0')
+    }
+  }, [actualDate])
   // `linear-gradient(to right, #138a8a 0%, #138a8a ${Math.floor(
   //   ((actualDate - startDate) / endDate) * 100,
   // )}%, #fff ${Math.floor(
