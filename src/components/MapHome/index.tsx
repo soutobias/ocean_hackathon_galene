@@ -240,21 +240,19 @@ export function MapHome({
   }
 
   return (
-    <div>
-      <MapContainer
-        style={{ height: '100vh', width: '100vw' }}
-        center={[43, 10]}
-        zoom={9}
-        maxZoom={30}
-        minZoom={2}
-        scrollWheelZoom={true}
-        zoomControl={false}
-        ref={setMap}
-      >
-        <TileLayer
-          url={`https://api.mapbox.com/styles/v1/${MAPBOX_USERID}/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_API_KEY}`}
-        />
-      </MapContainer>
-    </div>
+    <MapContainer
+      style={{ height: '100%', width: '100%' }}
+      center={[40, -10]}
+      zoom={5}
+      maxZoom={30}
+      minZoom={2}
+      scrollWheelZoom={true}
+      zoomControl={false}
+      ref={setMap}
+    >
+      <TileLayer
+        url={`https://api.mapbox.com/styles/v1/${MAPBOX_USERID}/tiles/256/{z}/{x}/{y}@2x?access_token=${MAPBOX_API_KEY}`}
+      />
+    </MapContainer>
   )
 }

@@ -8,7 +8,6 @@ export const HomeContainer = styled.div`
 export const SideBar = styled.div`
   display: flex;
   position: absolute;
-  left: 0rem;
 `
 
 export const BottomBar = styled.div`

@@ -3,7 +3,9 @@ import styled from 'styled-components'
 export const SideSelectionContainer = styled.div`
   display: flex;
   width: max-content;
-  height: 100vh;
+  position: relative;
+  height: 100%;
+  width: 1rem;
   background-color: ${(props) => props.theme['gray-50']};
   padding: 0.375rem;
   z-index: 9000;
@@ -13,8 +15,9 @@ export const SideSelectionContainer = styled.div`
 
 export const SideSelectionSide = styled.div`
   position: relative;
-  height: 100vh;
-  width: 3rem;
+  height: 100%;
+  width: 1rem;
+  right: 0;
   z-index: 9000;
   /* border-radius: 16px; */
   img {
@@ -23,7 +26,7 @@ export const SideSelectionSide = styled.div`
 `
 export const SideSelectionExtension = styled.div`
   position: relative;
-  height: 100vh;
+  height: 100%;
   padding: 0.375rem;
   width: max-content;
   z-index: 9000;

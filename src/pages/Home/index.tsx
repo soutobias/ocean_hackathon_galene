@@ -25,21 +25,46 @@ export function Home() {
 
   return (
     <HomeContainer>
-      <SideBar>
-        <SideSelection
-          selectedLayers={selectedLayers}
-          setSelectedLayers={setSelectedLayers}
-          actualLayer={actualLayer}
-          setActualLayer={setActualLayer}
-          layerAction={layerAction}
-          setLayerAction={setLayerAction}
-          modelTarget={modelTarget}
-          setModelTarget={setModelTarget}
-          extension={extension}
-          setExtension={setExtension}
-          setColorLegend={setColorLegend}
-        />
-      </SideBar>
+      <div className="grid grid-cols-[60%_40%] gap-[2vh] p-[5vh]">
+        <div className="h-[48vh] position-absolute">
+          <SideBar>
+            <SideSelection
+              selectedLayers={selectedLayers}
+              setSelectedLayers={setSelectedLayers}
+              actualLayer={actualLayer}
+              setActualLayer={setActualLayer}
+              layerAction={layerAction}
+              setLayerAction={setLayerAction}
+              modelTarget={modelTarget}
+              setModelTarget={setModelTarget}
+              extension={extension}
+              setExtension={setExtension}
+              setColorLegend={setColorLegend}
+            />
+          </SideBar>
+          <MapHome
+            selectedLayers={selectedLayers}
+            actualLayer={actualLayer}
+            actualDate={actualDate}
+            layerAction={layerAction}
+            setLayerAction={setLayerAction}
+            actualDepth={actualDepth}
+            setColorLegend={setColorLegend}
+            modelTarget={modelTarget}
+            clickPoint={clickPoint}
+            setClickPoint={setClickPoint}
+            setShowGraph={setShowGraph}
+            showGraph={showGraph}
+          />
+        </div>
+        <div className="bg-blue-200 h-[48vh]">Biology/Ecology Section</div>
+        <div className="bg-green-200 h-[40vh]">
+          MARITIME SPATIAL PLANNING SECTION / DATA SOURCES
+        </div>
+        <div className="bg-yellow-200 h-[40vh]">ECOSYSTEM SERVICES SECTION</div>
+        {/* <Button title='Go to Button Page' href='/button'/> */}
+      </div>
+      {/*
       <BottomBar>
         {selectedLayers &&
         selectedLayers !== 'Posidonia oceanica' &&
@@ -76,20 +101,7 @@ export function Home() {
           </>
         ) : null}
       </TopRightBar>
-      <MapHome
-        selectedLayers={selectedLayers}
-        actualLayer={actualLayer}
-        actualDate={actualDate}
-        layerAction={layerAction}
-        setLayerAction={setLayerAction}
-        actualDepth={actualDepth}
-        setColorLegend={setColorLegend}
-        modelTarget={modelTarget}
-        clickPoint={clickPoint}
-        setClickPoint={setClickPoint}
-        setShowGraph={setShowGraph}
-        showGraph={showGraph}
-      />
+
       {showGraph ? (
         <GraphPopup
           showGraph={showGraph}
@@ -97,7 +109,7 @@ export function Home() {
           actualDepth={actualDepth}
           setShowGraph={setShowGraph}
         ></GraphPopup>
-      ) : null}
+      ) : null} */}
     </HomeContainer>
   )
 }
